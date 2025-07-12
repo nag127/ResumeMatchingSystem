@@ -1,0 +1,5 @@
+flask
+openai
+crewai
+docx2txt
+PyPDF2

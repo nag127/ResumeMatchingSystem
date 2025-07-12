@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Matcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    hr {
+      border: 1px solid #ccc;
+      margin: 30px 0;
+    }
+    .markdown {
+      background: #fff;
+      padding: 15px;
+      border-left: 5px solid #4CAF50;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>📄 Resume Matcher</h1>
+  <form method="POST">
+    <label for="job_description"><strong>Job Description:</strong></label><br>
+    <textarea name="job_description" rows="10" placeholder="Paste the job description here...">{{ job_description or '' }}</textarea><br>
+
+    <label for="resume_folder"><strong>Resume Folder Path:</strong></label><br>
+    <input type="text" name="resume_folder" placeholder="Enter the full path to your resume folder"><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  {% if extracted_infos %}
+    <hr>
+    <h2>🧠 Extracted Resume Information</h2>
+    {% for info in extracted_infos %}
+      <h3>Resume {{ loop.index }}</h3>
+      <pre>{{ info | tojson(indent=2) }}</pre>
+    {% endfor %}
+  {% endif %}
+
+  {% if output_html %}
+    <hr>
+    <h2>🏆 Final Ranked Results</h2>
+    <div class="markdown">
+      {{ output_html | safe }}
+    </div>
+  {% endif %}
+</body>
+</html>
